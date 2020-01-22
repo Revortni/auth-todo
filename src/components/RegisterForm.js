@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import FormInput from './FormInput';
 import FormButton from './FormButton';
+import { registerValidation } from './utils/validation';
+import _ from 'lodash';
 import './styles/Form.css';
 
 class RegisterForm extends Component {
@@ -12,7 +14,7 @@ class RegisterForm extends Component {
         lastName: '',
         email: '',
         password: '',
-        repeatPassword: ''
+        confirmPassword: ''
       },
       registering: false,
       error: {},
@@ -31,20 +33,38 @@ class RegisterForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const data = { ...this.state.data };
-    // loginValidation(data);
+    const { data } = { ...this.state };
     this.props.requestRegister(data);
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.loggingIn !== prevState.loggingIn) {
-      return { loggingIn: nextProps.loggingIn };
+    if (nextProps.registering !== prevState.registering) {
+      return { registering: nextProps.registering };
     } else return null;
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.loggingIn !== this.props.loggingIn) {
-      this.setState({ loggingIn: this.props.loggingIn });
+  componentDidUpdate(prevProps, prevState) {
+    //check if form is being submitted
+    if (prevProps.registering !== this.props.registering) {
+      this.setState({ registering: this.props.registering });
+    }
+
+    //check if all form fields are valid
+    if (this.state.data !== prevState.data) {
+      const inputData = {
+        ...this.state.data
+      };
+      const validation = registerValidation(inputData);
+      const { valid, error } = validation;
+      console.log(validation);
+
+      if (!_.isEqual(this.state.error, error)) {
+        this.setState({ error });
+      }
+
+      if (!_.isEqual(this.state.valid, valid)) {
+        this.setState({ valid });
+      }
     }
   }
 
@@ -54,7 +74,7 @@ class RegisterForm extends Component {
         <div className='input-form'>
           <div className='input-form-title'>
             <h1>Register</h1>
-            <p>Please fill in this form to create an account.</p>
+            <p>Please fill up this form to create an account.</p>
           </div>
           <div className='form-wrapper'>
             <div className='name-input-wrapper clearfix'>
@@ -68,6 +88,7 @@ class RegisterForm extends Component {
                   value={this.state.data.firstName}
                   required
                   disabled={this.state.registering}
+                  error={this.state.error.firstName}
                 />
               </div>
               <div className='name-input'>
@@ -80,6 +101,7 @@ class RegisterForm extends Component {
                   value={this.state.data.lastName}
                   required
                   disabled={this.state.registering}
+                  error={this.state.error.lastName}
                 />
               </div>
             </div>
@@ -92,6 +114,7 @@ class RegisterForm extends Component {
               value={this.state.data.email}
               required
               disabled={this.state.registering}
+              error={this.state.error.email}
             />
 
             <FormInput
@@ -103,17 +126,19 @@ class RegisterForm extends Component {
               value={this.state.data.password}
               required
               disabled={this.state.registering}
+              error={this.state.error.password}
             />
 
             <FormInput
-              name='password-repeat'
+              name='confirmPassword'
               type='password'
               title='Repeat Password'
               placeholder='Enter Repeat Password'
               onChange={this.handleChange}
-              value={this.state.data.repeatPassword}
+              value={this.state.data.confirmPassword}
               required
               disabled={this.state.registering}
+              error={this.state.error.confirmPassword}
             />
             <FormButton
               onSubmit={'Registering...'}

@@ -37,8 +37,7 @@ input[type='password']:focus {
 input[type='password']:disabled {
   border: 1px solid#e1e1e1;
   outline: none;
-  background-color: #d2d2d2;
-  color: #ffffff;
+  background-color: #f2f2f2;
 }
 
 .name-input {
@@ -56,7 +55,7 @@ input[type='password']:disabled {
 }
 
 .form-submit-btn {
-  background-color: #20bf6b;
+  background-color: #188b4e;
   color: #ffffff;
   padding: 16px 20px;
   margin: 8px 0;
@@ -66,15 +65,16 @@ input[type='password']:disabled {
   opacity: 0.9;
   border-radius: 10px;
   font-size: 18px;
+  font-weight: 520;
   transition: all 0.3s ease 0s;
 }
 
 .form-submit-btn:hover {
-  background-color: #30cf7a;
+  background-color: #34c478;
 }
 
 .form-submit-btn:disabled {
-  background-color: #3fda7f;
+  background-color: #5cd093;
   cursor: default;
 }
 

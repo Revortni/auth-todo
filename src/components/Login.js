@@ -21,7 +21,7 @@ class Login extends Component {
       .then(response => {
         const { token, email } = response.data;
         localStorage.setItem(`token`, token);
-        this.setState({ loggingIn: false, email, loggedIn: true });
+        this.setState({ loggingIn: false, email });
         this.props.setAuth({ auth: true, params: { email, token } });
       })
       .catch(err => {

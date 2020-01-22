@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import FormInput from './FormInput';
 import { loginValidation } from './utils/validation';
 import FormButton from './FormButton';
+import _ from 'lodash';
 import './styles/Form.css';
 
 class LoginForm extends Component {
@@ -26,9 +27,7 @@ class LoginForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    const inputData = { ...this.state.data };
-    const { valid, error, data } = loginValidation(inputData);
-    this.setState({ valid, error, data });
+    const { data } = { ...this.state };
     this.props.requestLogin(data);
   };
 
@@ -38,9 +37,25 @@ class LoginForm extends Component {
     } else return null;
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (prevProps.loggingIn !== this.props.loggingIn) {
       this.setState({ loggingIn: this.props.loggingIn });
+    }
+
+    if (this.state.data !== prevState.data) {
+      const inputData = {
+        ...this.state.data
+      };
+      const validation = loginValidation(inputData);
+      const { valid, error } = validation;
+
+      if (!_.isEqual(this.state.error, error)) {
+        this.setState({ error });
+      }
+
+      if (!_.isEqual(this.state.valid, valid)) {
+        this.setState({ valid });
+      }
     }
   }
 

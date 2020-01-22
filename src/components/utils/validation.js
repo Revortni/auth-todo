@@ -10,7 +10,7 @@ export const registerValidation = data => {
   let payload = {
     data,
     error: {},
-    valid: false
+    valid: true
   };
 
   Object.keys(data).forEach(value => {
