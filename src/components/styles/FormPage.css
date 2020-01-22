@@ -1,0 +1,32 @@
+.error-message-form {
+  text-align: center;
+  padding: 50px;
+}
+
+.login-wrapper {
+  padding: 100px 15px;
+}
+
+.register-wrapper {
+  padding: 100px 15px;
+}
+
+@media screen and (min-width: 600px) and (max-width: 1170px) {
+  .login-wrapper {
+    padding: 100px 40px;
+  }
+
+  .register-wrapper {
+    padding: 100px 40px;
+  }
+}
+
+@media screen and (min-width: 1170px) {
+  .login-wrapper {
+    padding: 100px 40px;
+  }
+
+  .register-wrapper {
+    padding: 100px 40px;
+  }
+}

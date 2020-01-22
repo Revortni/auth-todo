@@ -1,0 +1,39 @@
+.container {
+  width: 22.5em;
+  margin: 0 auto;
+}
+
+.app {
+  width: 100%;
+  min-width: 22.5em;
+}
+
+.clearfix::after {
+  content: '';
+  clear: both;
+  display: table;
+}
+
+@media screen and (min-width: 1170px) {
+  .container {
+    width: 73.125em;
+    margin: 0 auto;
+  }
+
+  .app {
+    width: 100%;
+    min-width: 73.125em;
+  }
+}
+
+@media screen and (min-width: 600px) and (max-width: 1170px) {
+  .container {
+    width: 48em;
+    margin: 0 auto;
+  }
+
+  .app {
+    width: 100%;
+    min-width: 48em;
+  }
+}

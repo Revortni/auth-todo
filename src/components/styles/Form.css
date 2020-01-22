@@ -1,0 +1,94 @@
+.form-wrapper {
+  padding: 10px 0px;
+}
+
+.input-form {
+  margin: 0 auto;
+  color: #3a3a3a;
+}
+
+.input-form-title {
+  padding: 20px 0;
+}
+.input-form-title h1 {
+  padding: 5px 0;
+}
+
+.input-form input[type='text'],
+input[type='password'] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0;
+  display: inline-block;
+  border: 1px solid #e2e2e2;
+  box-sizing: border-box;
+  border-radius: 10px;
+  outline: none;
+  font-size: 16px;
+}
+
+.input-form input[type='text']:focus,
+input[type='password']:focus {
+  border: 1px solid #5f9ea0;
+  outline: none;
+}
+
+.input-form input[type='text']:disabled,
+input[type='password']:disabled {
+  border: 1px solid#e1e1e1;
+  outline: none;
+  background-color: #d2d2d2;
+  color: #ffffff;
+}
+
+.name-input {
+  float: left;
+  width: 50%;
+  box-sizing: border-box;
+}
+
+.name-input:first-child {
+  padding-right: 10px;
+}
+
+.name-input input {
+  display: block;
+}
+
+.form-submit-btn {
+  background-color: #20bf6b;
+  color: #ffffff;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+  border-radius: 10px;
+  font-size: 18px;
+  transition: all 0.3s ease 0s;
+}
+
+.form-submit-btn:hover {
+  background-color: #30cf7a;
+}
+
+.form-submit-btn:disabled {
+  background-color: #3fda7f;
+  cursor: default;
+}
+
+.form-bottom-info-redirect {
+  margin: 0 auto;
+  text-align: center;
+  margin: 20px 15px;
+}
+
+.form-bottom-info-redirect a {
+  padding-left: 5px;
+  color: #00ced1;
+}
+
+.form-bottom-info-redirect a:hover {
+  text-decoration: underline;
+}

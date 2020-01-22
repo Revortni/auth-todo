@@ -1,0 +1,11 @@
+.form-input-wrapper {
+  padding: 10px 0px;
+}
+
+.form-input-error {
+  color: #d8000c;
+  background-color: #ffd2d2;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 14px;
+}
