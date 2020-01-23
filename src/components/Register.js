@@ -34,6 +34,7 @@ class Register extends Component {
   };
 
   render() {
+    const error = this.props.error || this.state.error;
     return (
       <div className='container'>
         <div className='register-wrapper'>
@@ -46,9 +47,7 @@ class Register extends Component {
               Already have an account? <Link to='/login'>Login</Link>
             </span>
           </div>
-          {this.props.error ? (
-            <div className='error-message-form'>{this.state.error}</div>
-          ) : null}
+          {error ? <div className='form-error-message'>{error}</div> : null}
         </div>
       </div>
     );

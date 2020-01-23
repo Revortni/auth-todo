@@ -7,12 +7,13 @@ import todoData from './todoData';
 import uuid from 'uuid';
 
 class Main extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       list: todoData,
       filtered: todoData,
-      filter: ''
+      filter: '',
+      data: props.data
     };
   }
 
@@ -82,7 +83,7 @@ class Main extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Header setFilter={this.setCompletedFilter} />
+        <Header setFilter={this.setCompletedFilter} data={this.state.data} />
         <AddItem handleSubmit={this.handleAddItem} />
         <SearchItem handleSearchItem={this.filterItems} />
         <ListContainer

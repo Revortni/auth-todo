@@ -41,6 +41,30 @@ header {
   background-color: #eee;
 }
 
+.header-profile-info {
+  float: right;
+  padding: 16px 15px;
+  cursor: pointer;
+}
+
+.header-profile-info-img-wrapper {
+  width: 30px;
+  height: 30px;
+  float: left;
+}
+
+.header-profile-info-img-wrapper img {
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+}
+
+.header-profile-info span {
+  float: left;
+  padding: 0 15px;
+  line-height: 30px;
+}
+
 @media screen and (min-width: 1170px) {
   .header_title {
     font-size: 22px;

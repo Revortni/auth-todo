@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import LoginForm from './LoginForm';
 import { fetchFromUrl } from './utils/fetch';
 import { loginUrl, baseURL } from './config/url';
@@ -11,7 +11,7 @@ class Login extends Component {
     this.state = {
       loggedIn: false,
       loggingIn: false,
-      email: false
+      redirectToReferrer: false
     };
   }
 
@@ -19,10 +19,10 @@ class Login extends Component {
     this.setState({ loggingIn: true });
     fetchFromUrl({ baseURL, url: loginUrl, method: 'post', data })
       .then(response => {
-        const { token, email } = response.data;
+        const { token, ...rest } = response.data;
         localStorage.setItem(`token`, token);
-        this.setState({ loggingIn: false, email });
-        this.props.setAuth({ auth: true, params: { email, token } });
+        this.setState({ loggingIn: false, redirectToReferrer: true });
+        this.props.setAuth({ auth: true, params: { ...rest, token } });
       })
       .catch(err => {
         if (err.response) {
@@ -36,6 +36,14 @@ class Login extends Component {
 
   render() {
     const error = this.props.error || this.state.error;
+    const { from } = this.props.location.state || { from: { pathname: '/' } };
+    const { redirectToReferrer } = this.state;
+
+    if (redirectToReferrer) {
+      console.log('redirecting to', from);
+      return <Redirect to={from} />;
+    }
+
     return (
       <div className='container'>
         <div className='login-wrapper'>
@@ -49,7 +57,7 @@ class Login extends Component {
               <Link to='/register'>Register</Link>
             </span>
           </div>
-          {error ? <div className='error-message-form'>{error}</div> : null}
+          {error ? <div className='form-error-message'>{error}</div> : null}
         </div>
       </div>
     );

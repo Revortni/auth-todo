@@ -6,9 +6,9 @@ class Header extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: 'Home'
+      active: 'Home',
+      data: props.data
     };
-
     this.options = [
       {
         name: 'Home',
@@ -31,10 +31,23 @@ class Header extends React.Component {
   };
 
   render() {
+    const { firstName, lastName } = this.state.data;
     return (
       <header>
         <div className='container clearfix'>
           <div className='header_title'>Todo List</div>
+          <div className='header-profile-info'>
+            <div className='header-profile-info-img-wrapper'>
+              <img
+                src='https://i.picsum.photos/id/904/600/400.jpg'
+                alt='profile-img'
+              />
+            </div>
+            <span>
+              {firstName}
+              {lastName}
+            </span>
+          </div>
           <div className='header_options_container'>
             {this.options.map(item => (
               <HeaderTab

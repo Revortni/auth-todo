@@ -6,6 +6,7 @@ import { fetchFromUrl } from './utils/fetch';
 import { baseURL } from './config/url';
 import { ProtectedRoute } from './Auth';
 import Main from './Main';
+import Dashboard from './Dashboard';
 
 class AuthRoute extends React.Component {
   constructor(props) {
@@ -31,11 +32,11 @@ class AuthRoute extends React.Component {
           loaded: true,
           data: { ...data.data, token }
         });
-        this.props.history.push('/dashboard');
       })
       .catch(err => {
         if (err.response) {
           if (err.response.status === 401) {
+            //destroy token if token is invalid
             localStorage.setItem('token', '');
           }
         }
@@ -56,55 +57,52 @@ class AuthRoute extends React.Component {
     this.verifyToken({ token });
   }
 
-  setTokenFromLogin = ({ auth, params }) => {
+  setTokenOnLogin = ({ auth, params }) => {
+    const { from } = this.props.location.state || { from: { pathname: '/' } };
     this.setState({ authenticated: auth, loaded: true, data: params });
-    this.props.history.push({
-      pathname: '/dashboard'
-    });
+    this.props.history.push(from);
   };
 
   render() {
     return (
       <div>
         {this.state.loaded ? (
-          <>
-            <Switch>
-              <Route path='/public'>
-                <div>public</div>
-              </Route>
-              <Route
-                path='/login'
-                render={props => (
-                  <Login
-                    {...props}
-                    setAuth={this.setTokenFromLogin}
-                    error={this.state.error}
-                  />
-                )}
-              ></Route>
-              <Route
-                path='/register'
-                render={props => (
-                  <Register {...props} error={this.state.error} />
-                )}
-              ></Route>
-              <ProtectedRoute
-                path='/dashboard'
-                isAuthenticated={this.state.authenticated}
-                data={this.state.data}
-              >
-                <Main data={this.state.data} />
-              </ProtectedRoute>
-              <Route path='/'>
-                <Redirect
-                  to={{
-                    pathname: '/dashboard',
-                    state: { from: this.props.location }
-                  }}
+          <Switch>
+            <Route path='/public'>
+              <div>public</div>
+            </Route>
+            <Route
+              path='/login'
+              render={props => (
+                <Login
+                  {...props}
+                  setAuth={this.setTokenOnLogin}
+                  error={this.state.error}
                 />
-              </Route>
-            </Switch>
-          </>
+              )}
+            ></Route>
+            <Route
+              path='/register'
+              render={props => <Register {...props} error={this.state.error} />}
+            ></Route>
+            <ProtectedRoute
+              path='/dashboard'
+              isAuthenticated={this.state.authenticated}
+              data={this.state.data}
+            >
+              <Dashboard data={this.state.data} />
+            </ProtectedRoute>
+            <ProtectedRoute
+              path='/app'
+              isAuthenticated={this.state.authenticated}
+              data={this.state.data}
+            >
+              <Main data={this.state.data} />
+            </ProtectedRoute>
+            <Route path='/'>
+              <Redirect to='/app' />
+            </Route>
+          </Switch>
         ) : (
           'Loading...'
         )}

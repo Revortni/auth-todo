@@ -37,24 +37,25 @@ export const registerValidation = data => {
         if (!data.email) {
           payload.valid = false;
           payload.error.email = 'Email is required';
-        } else {
-          if (!emailValidation(data.email)) {
-            payload.valid = false;
-            payload.error.email = 'Email is invalid';
-          } else payload.error.email = null;
-        }
+        } else if (!emailValidation(data.email)) {
+          payload.valid = false;
+          payload.error.email = 'Please enter a valid email address';
+        } else payload.error.email = null;
+
         break;
       case 'password':
         if (!data.password) {
           payload.valid = false;
           payload.error.password = 'Password is required';
-        } else {
-          if (data.password !== data.confirmPassword) {
-            payload.valid = false;
-            payload.error.password =
-              'Confirm password must match with password';
-          } else payload.error.password = null;
-        }
+        } else if (data.password.length < 3) {
+          payload.valid = false;
+          payload.error.password =
+            'Your password needs to be between 8 and 30 characters long';
+        } else if (data.password !== data.confirmPassword) {
+          payload.valid = false;
+          payload.error.password = 'Confirm password must match with password';
+        } else payload.error.password = null;
+
         break;
       case 'confirmPassword':
         if (!data.confirmPassword) {
@@ -83,12 +84,11 @@ export const loginValidation = data => {
         if (!data.email) {
           payload.valid = false;
           payload.error.email = 'Email is required';
-        } else {
-          if (!emailValidation(data.email)) {
-            payload.valid = false;
-            payload.error.email = 'Email is invalid';
-          } else payload.error.email = null;
-        }
+        } else if (!emailValidation(data.email)) {
+          payload.valid = false;
+          payload.error.email = 'Please enter a valid email address';
+        } else payload.error.email = null;
+
         break;
       case 'password':
         if (!data.password) {

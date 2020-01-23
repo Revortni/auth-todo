@@ -9,12 +9,12 @@ export const ProtectedRoute = ({
   children,
   ...rest
 }) => {
+  console.log(rest);
   return (
     <Route
       {...rest}
       render={props =>
         isAuthenticated ? (
-          // <DashBoard {...props} data={data} />
           children
         ) : (
           <Redirect
