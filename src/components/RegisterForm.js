@@ -56,7 +56,6 @@ class RegisterForm extends Component {
       };
       const validation = registerValidation(inputData);
       const { valid, error } = validation;
-      console.log(validation);
 
       if (!_.isEqual(this.state.error, error)) {
         this.setState({ error });

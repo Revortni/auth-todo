@@ -27,14 +27,14 @@
   border-radius: 10px;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-  background-color: #4af;
+  background-color: #34c478;
   color: #fff;
   font-weight: 700;
 }
 
 .add_item_button:hover {
   cursor: pointer;
-  background-color: #4cf;
+  background-color: #30b36e;
 }
 
 @media screen and (min-width: 1170px) {

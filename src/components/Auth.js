@@ -3,13 +3,7 @@ import { Route, Redirect } from 'react-router-dom';
 // import DashBoard from './Dashboard';
 // import Main from './Main';
 
-export const ProtectedRoute = ({
-  isAuthenticated,
-  data,
-  children,
-  ...rest
-}) => {
-  console.log(rest);
+export const ProtectedRoute = ({ isAuthenticated, children, ...rest }) => {
   return (
     <Route
       {...rest}

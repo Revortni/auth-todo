@@ -13,9 +13,14 @@ header {
   text-align: center;
 }
 
+.header_right {
+  float: right;
+}
+
 .header_options_container {
   position: fixed;
   bottom: 0;
+  left: 0;
   width: 100%;
   background-color: #fff;
 }
@@ -34,17 +39,37 @@ header {
 
 .activeOption {
   padding: 5px 10px;
-  border-top: 5px solid #4cf;
+  border-top: 5px solid #34c478;
 }
 
 .header_option:hover {
   background-color: #eee;
 }
 
-.header-profile-info {
-  float: right;
+.header-profile-options {
+  float: none;
+  position: absolute;
+  top: 10px;
+  right: 0;
+  z-index: 20;
   padding: 16px 15px;
-  cursor: pointer;
+  line-height: 25px;
+  /* display: none; */
+}
+
+.header-profile-options:hover {
+  float: right;
+  position: static;
+  display: block;
+}
+
+.header-profile-options:hover * {
+  display: block;
+}
+
+.header-profile-info {
+  float: left;
+  cursor: default;
 }
 
 .header-profile-info-img-wrapper {
@@ -62,7 +87,17 @@ header {
 .header-profile-info span {
   float: left;
   padding: 0 15px;
-  line-height: 30px;
+  display: none;
+}
+
+.signout-button {
+  float: left;
+  cursor: pointer;
+  display: none;
+}
+
+.signout-button:hover {
+  text-decoration: underline;
 }
 
 @media screen and (min-width: 1170px) {
@@ -74,7 +109,7 @@ header {
 
   .header_options_container {
     margin-right: 15px;
-    float: right;
+    float: left;
     position: static;
     width: auto;
   }
@@ -92,6 +127,20 @@ header {
   .activeOption {
     padding-top: 15px;
   }
+
+  .header-profile-options {
+    float: right;
+    position: static;
+    display: block;
+  }
+
+  .header-profile-info span {
+    display: block;
+  }
+
+  .signout-button {
+    display: block;
+  }
 }
 
 @media screen and (min-width: 600px) and (max-width: 1170px) {
@@ -103,7 +152,7 @@ header {
 
   .header_options_container {
     margin-right: 15px;
-    float: right;
+    float: left;
     display: block;
     position: static;
     width: auto;
@@ -121,5 +170,19 @@ header {
 
   .activeOption {
     padding-top: 15px;
+  }
+
+  .header-profile-options {
+    float: right;
+    display: block;
+    position: static;
+  }
+
+  .header-profile-info span {
+    display: block;
+  }
+
+  .signout-button {
+    display: block;
   }
 }

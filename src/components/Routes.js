@@ -3,12 +3,12 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Login from './Login';
 import Register from './Register';
 import { fetchFromUrl } from './utils/fetch';
-import { baseURL } from './config/url';
+import { baseURL, verifyTokenUrl } from './config/url';
 import { ProtectedRoute } from './Auth';
 import Main from './Main';
 import Dashboard from './Dashboard';
 
-class AuthRoute extends React.Component {
+class AuthRoute extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,13 +24,13 @@ class AuthRoute extends React.Component {
     const headers = { token };
 
     //verify token
-    fetchFromUrl({ baseURL, url: 'verify', method: 'get', headers })
+    fetchFromUrl({ baseURL, url: verifyTokenUrl, method: 'get', headers })
       .then(({ data }) => {
         this.setState({
           authenticated: true,
           token,
           loaded: true,
-          data: { ...data.data, token }
+          data: { ...data, token }
         });
       })
       .catch(err => {
@@ -48,7 +48,7 @@ class AuthRoute extends React.Component {
   };
 
   componentDidMount() {
-    localStorage.setItem('token', '');
+    // localStorage.setItem('token', '');
     let token = localStorage.getItem('token');
     if (!token) {
       this.setState({ loaded: true, authenticated: false });
@@ -63,7 +63,23 @@ class AuthRoute extends React.Component {
     this.props.history.push(from);
   };
 
+  handleLogout = () => {
+    localStorage.setItem('token', '');
+    this.setState({
+      authenticated: false,
+      token: null,
+      data: {},
+      error: null
+    });
+  };
+
   render() {
+    const protectedProps = {
+      authenticated: this.state.authenticated,
+      data: { ...this.state.data },
+      handleLogout: this.handleLogout
+    };
+
     return (
       <div>
         {this.state.loaded ? (
@@ -88,16 +104,14 @@ class AuthRoute extends React.Component {
             <ProtectedRoute
               path='/dashboard'
               isAuthenticated={this.state.authenticated}
-              data={this.state.data}
             >
-              <Dashboard data={this.state.data} />
+              <Dashboard {...protectedProps} />
             </ProtectedRoute>
             <ProtectedRoute
               path='/app'
               isAuthenticated={this.state.authenticated}
-              data={this.state.data}
             >
-              <Main data={this.state.data} />
+              <Main {...protectedProps} />
             </ProtectedRoute>
             <Route path='/'>
               <Redirect to='/app' />

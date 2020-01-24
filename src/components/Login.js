@@ -15,22 +15,29 @@ class Login extends Component {
     };
   }
 
+  handleError = ({ err }) => {
+    if (err.response) {
+      const { msg } = err.response.data || { msg: 'Error' };
+      this.setState({ loggingIn: false, error: msg });
+    } else {
+      this.setState({ loggingIn: false, error: err.message || 'Error' });
+    }
+  };
+
+  saveToken = ({ token, ...rest }) => {
+    localStorage.setItem(`token`, token);
+    this.setState({ loggingIn: false, redirectToReferrer: true });
+    this.props.setAuth({ auth: true, params: { ...rest, token } });
+  };
+
   requestLogin = data => {
     this.setState({ loggingIn: true });
     fetchFromUrl({ baseURL, url: loginUrl, method: 'post', data })
       .then(response => {
-        const { token, ...rest } = response.data;
-        localStorage.setItem(`token`, token);
-        this.setState({ loggingIn: false, redirectToReferrer: true });
-        this.props.setAuth({ auth: true, params: { ...rest, token } });
+        this.saveToken(response.data);
       })
       .catch(err => {
-        if (err.response) {
-          const { msg } = err.response.data || { msg: 'Error' };
-          this.setState({ loggingIn: false, error: msg });
-        } else {
-          this.setState({ loggingIn: false, error: err.message || 'Error' });
-        }
+        this.handleError({ err });
       });
   };
 
@@ -39,11 +46,10 @@ class Login extends Component {
     const { from } = this.props.location.state || { from: { pathname: '/' } };
     const { redirectToReferrer } = this.state;
 
+    //redirect to initial route after authentication
     if (redirectToReferrer) {
-      console.log('redirecting to', from);
       return <Redirect to={from} />;
     }
-
     return (
       <div className='container'>
         <div className='login-wrapper'>

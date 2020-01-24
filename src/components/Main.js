@@ -2,39 +2,103 @@ import React from 'react';
 import ListContainer from './ListContainer';
 import AddItem from './AddItem';
 import SearchItem from './SearchItem';
-import Header from './Header';
-import todoData from './todoData';
+import { Header } from './Header';
+// import todoData from './todoData';
 import uuid from 'uuid';
+//for server operations
+import { fetchFromUrl } from './utils/fetch';
+import { baseURL, todoUrl } from './config/url';
 
 class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      list: todoData,
-      filtered: todoData,
+      list: [],
+      filtered: [],
       filter: '',
       data: props.data
     };
   }
 
+  updateDatabase = ({ data, method, id }) => {
+    return new Promise((resolve, reject) => {
+      const headers = { token: this.props.data.token };
+      const params = id ? '/' + id : '';
+      return fetchFromUrl({
+        baseURL,
+        url: todoUrl + params,
+        method,
+        data,
+        headers
+      })
+        .then(response => {
+          if (response) {
+            return resolve({ data, response });
+          }
+        })
+        .catch(err => {
+          const { msg } = err.response ? err.response.data : { msg: 'Error' };
+          return reject(msg);
+        });
+    });
+  };
+
+  componentDidMount() {
+    this.updateDatabase({
+      method: 'get'
+    })
+      .then(({ response }) => {
+        const data = Object.values(response.data);
+        this.setState({
+          list: data,
+          filtered: data
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
   checkItem = id => {
+    let targetItem = {};
     const list = this.state.list.map(item => {
       if (item.id === id) {
         item.completed = !item.completed;
+        targetItem = item;
       }
       return item;
     });
-    this.setState({ list }, this.filterItems);
+
+    this.updateDatabase({
+      method: 'patch',
+      id,
+      data: { completed: targetItem.completed }
+    })
+      .then(() => {
+        this.setState({ list }, this.filterItems);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   removeItem = id => {
-    let list = this.state.list.filter(item => id !== item.id);
-    this.setState(
-      {
-        list
-      },
-      this.filterItems
-    );
+    this.updateDatabase({
+      method: 'delete',
+      id
+    })
+      .then(() => {
+        let list = this.state.list.filter(item => id !== item.id);
+        this.setState(
+          {
+            list
+          },
+          this.filterItems
+        );
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   setCompletedFilter = filter => {
@@ -54,7 +118,9 @@ class Main extends React.Component {
         item => item.completed === this.state.completedFilter
       );
     }
-    const filtered = list.filter(item => item.text.includes(filter));
+    const filtered = list.filter(item =>
+      item.text.toLowerCase().includes(filter.toLowerCase())
+    );
 
     this.setState({
       filtered,
@@ -63,33 +129,41 @@ class Main extends React.Component {
   };
 
   handleAddItem = content => {
-    let list = [
-      ...this.state.list,
-      {
-        id: uuid.v4(),
-        text: content,
-        completed: false
-      }
-    ];
+    const data = {
+      id: uuid.v4(),
+      text: content,
+      completed: false
+    };
 
-    this.setState(
-      {
-        list
-      },
-      this.filterItems
-    );
+    this.updateDatabase({
+      data,
+      method: 'post'
+    })
+      .then(({ data }) => {
+        const list = [...this.state.list, data];
+        this.setState({ list }, this.filterItems);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   render() {
     return (
       <React.Fragment>
-        <Header setFilter={this.setCompletedFilter} data={this.state.data} />
+        <Header
+          authenticated={true}
+          handleLogout={this.props.handleLogout}
+          setFilter={this.setCompletedFilter}
+          data={this.state.data}
+        />
         <AddItem handleSubmit={this.handleAddItem} />
         <SearchItem handleSearchItem={this.filterItems} />
         <ListContainer
           list={this.state.filtered}
           checkItem={this.checkItem}
           removeItem={this.removeItem}
+          filter={this.state.filter}
         />
       </React.Fragment>
     );

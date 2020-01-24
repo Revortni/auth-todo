@@ -16,7 +16,11 @@ const ListContainer = props => {
   return (
     <div className='container'>
       <div className='todo-list'>
-        {props.list.length ? todoItems : <NoData />}
+        {props.list.length ? (
+          todoItems
+        ) : (
+          <NoData searchOn={props.filter.length ? true : false} />
+        )}
       </div>
     </div>
   );
