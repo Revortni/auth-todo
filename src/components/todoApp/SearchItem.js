@@ -3,7 +3,7 @@ import '../styles/SearchItem.css';
 const SearchItem = props => {
   const handleSearch = e => {
     let filter = e.target.value;
-    props.handleSearchItem({ filter });
+    props.handleSearchItem(filter);
   };
 
   return (

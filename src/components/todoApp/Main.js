@@ -3,6 +3,7 @@ import ListContainer from './ListContainer';
 import AddItem from './AddItem';
 import SearchItem from './SearchItem';
 import { Header } from '../Header';
+import { Dashboard } from './Dashboard';
 import uuid from 'uuid';
 //for server operations
 import { fetchFromUrl } from '../utils/fetch';
@@ -113,7 +114,7 @@ class Main extends React.Component {
     );
   };
 
-  filterItems = ({ filter }) => {
+  filterItems = filter => {
     let list = this.state.list;
     filter = filter || this.state.filter;
     if (this.state.completedFilterActive) {
@@ -160,15 +161,7 @@ class Main extends React.Component {
           setFilter={this.setCompletedFilter}
           data={this.state.data}
         />
-        <AddItem handleSubmit={this.handleAddItem} />
-        <SearchItem handleSearchItem={this.filterItems} />
-        <ListContainer
-          list={this.state.filtered}
-          checkItem={this.checkItem}
-          removeItem={this.removeItem}
-          filter={this.state.filter}
-          loading={this.state.loading}
-        />
+        <Dashboard />
       </React.Fragment>
     );
   }
