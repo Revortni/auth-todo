@@ -2,12 +2,11 @@ import React from 'react';
 import ListContainer from './ListContainer';
 import AddItem from './AddItem';
 import SearchItem from './SearchItem';
-import { Header } from './Header';
-// import todoData from './todoData';
+import { Header } from '../Header';
 import uuid from 'uuid';
 //for server operations
-import { fetchFromUrl } from './utils/fetch';
-import { baseURL, todoUrl } from './config/url';
+import { fetchFromUrl } from '../utils/fetch';
+import { baseURL, todoUrl } from '../config/url';
 
 class Main extends React.Component {
   constructor(props) {
@@ -16,7 +15,8 @@ class Main extends React.Component {
       list: [],
       filtered: [],
       filter: '',
-      data: props.data
+      data: props.data,
+      loading: true
     };
   }
 
@@ -51,10 +51,12 @@ class Main extends React.Component {
         const data = Object.values(response.data);
         this.setState({
           list: data,
-          filtered: data
+          filtered: data,
+          loading: false
         });
       })
       .catch(err => {
+        this.setState({ loading: false });
         console.log(err);
       });
   }
@@ -111,11 +113,12 @@ class Main extends React.Component {
     );
   };
 
-  filterItems = (filter = this.state.filter) => {
+  filterItems = ({ filter }) => {
     let list = this.state.list;
+    filter = filter || this.state.filter;
     if (this.state.completedFilterActive) {
       list = this.state.list.filter(
-        item => item.completed === this.state.completedFilter
+        item => (item.completed ? true : false) === this.state.completedFilter
       );
     }
     const filtered = list.filter(item =>
@@ -164,6 +167,7 @@ class Main extends React.Component {
           checkItem={this.checkItem}
           removeItem={this.removeItem}
           filter={this.state.filter}
+          loading={this.state.loading}
         />
       </React.Fragment>
     );

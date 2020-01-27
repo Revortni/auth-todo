@@ -1,6 +1,6 @@
 import React from 'react';
 
-function ListItem(props) {
+const ListItem = props => {
   return (
     <div className='todo-item clearfix'>
       <div className='todo-item-left'>
@@ -21,6 +21,6 @@ function ListItem(props) {
       </div>
     </div>
   );
-}
+};
 
 export default ListItem;

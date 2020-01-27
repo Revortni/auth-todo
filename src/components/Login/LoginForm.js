@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import FormInput from './FormInput';
-import { loginValidation } from './utils/validation';
-import FormButton from './FormButton';
+import FormInput from '../Form/FormInput';
+import { loginValidation } from '../utils/validation';
+import FormButton from '../Form/FormButton';
 import _ from 'lodash';
-import './styles/Form.css';
+import '../styles/Form.css';
 
 class LoginForm extends Component {
   constructor(props) {
@@ -41,7 +41,6 @@ class LoginForm extends Component {
     if (prevProps.loggingIn !== this.props.loggingIn) {
       this.setState({ loggingIn: this.props.loggingIn });
     }
-
     if (this.state.data !== prevState.data) {
       const inputData = {
         ...this.state.data
@@ -93,7 +92,7 @@ class LoginForm extends Component {
               onSubmit={'Logging in...'}
               text={'Login'}
               disabled={this.state.loggingIn || !this.state.valid}
-              submitted={this.state.loggingIn}
+              submitting={this.state.loggingIn}
             />
           </div>
         </div>

@@ -18,19 +18,25 @@ export const registerValidation = data => {
       case 'firstName':
         if (!data.firstName) {
           payload.valid = false;
-          payload.error.firstName = 'First Name is required';
+          payload.error.firstName = 'First name is required';
+        } else if (data.firstName.length < 3) {
+          payload.valid = false;
+          payload.error.firstName = 'First name must have atleast 3 characters';
         } else if (!nameValidation(data.firstName)) {
           payload.valid = false;
-          payload.error.firstName = 'First Name is invalid';
+          payload.error.firstName = 'First name is invalid';
         } else payload.error.firstName = null;
         break;
       case 'lastName':
         if (!data.lastName) {
           payload.valid = false;
-          payload.error.lastName = 'Last Name is required';
+          payload.error.lastName = 'Last name is required';
+        } else if (data.firstName.length < 3) {
+          payload.valid = false;
+          payload.error.firstName = 'Last name must have atleast 3 characters';
         } else if (!nameValidation(data.lastName)) {
           payload.valid = false;
-          payload.error.lastName = 'Last Name is invalid';
+          payload.error.lastName = 'Last name is invalid';
         } else payload.error.lastName = null;
         break;
       case 'email':
@@ -47,7 +53,7 @@ export const registerValidation = data => {
         if (!data.password) {
           payload.valid = false;
           payload.error.password = 'Password is required';
-        } else if (data.password.length < 3) {
+        } else if (data.password.length < 8) {
           payload.valid = false;
           payload.error.password =
             'Your password needs to be between 8 and 30 characters long';

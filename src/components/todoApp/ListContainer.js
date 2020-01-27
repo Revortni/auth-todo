@@ -1,6 +1,6 @@
 import React from 'react';
 import ListItem from './ListItem';
-import './styles/ListContainer.css';
+import '../styles/ListContainer.css';
 import NoData from './NoData';
 
 const ListContainer = props => {
@@ -19,7 +19,10 @@ const ListContainer = props => {
         {props.list.length ? (
           todoItems
         ) : (
-          <NoData searchOn={props.filter.length ? true : false} />
+          <NoData
+            loading={props.loading}
+            searchOn={props.filter.length ? true : false}
+          />
         )}
       </div>
     </div>

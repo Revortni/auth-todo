@@ -1,11 +1,11 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import Login from './Login';
-import Register from './Register';
+import Login from './Login/Login';
+import Register from './Register/Register';
 import { fetchFromUrl } from './utils/fetch';
 import { baseURL, verifyTokenUrl } from './config/url';
 import { ProtectedRoute } from './Auth';
-import Main from './Main';
+import Main from './todoApp/Main';
 import Dashboard from './Dashboard';
 
 class AuthRoute extends React.PureComponent {

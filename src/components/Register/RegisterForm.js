@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import FormInput from './FormInput';
-import FormButton from './FormButton';
-import { registerValidation } from './utils/validation';
+import FormInput from '../Form/FormInput';
+import FormButton from '../Form/FormButton';
+import { registerValidation } from '../utils/validation';
 import _ from 'lodash';
-import './styles/Form.css';
+import '../styles/Form.css';
 
 class RegisterForm extends Component {
   constructor(props) {
@@ -25,7 +25,7 @@ class RegisterForm extends Component {
 
   handleChange = e => {
     e.preventDefault();
-    let change = { [e.target.name]: e.target.value };
+    let change = { [e.target.name]: e.target.value.trim() };
     this.setState(prevState => ({
       data: { ...prevState.data, ...change }
     }));
@@ -142,7 +142,7 @@ class RegisterForm extends Component {
             <FormButton
               onSubmit={'Registering...'}
               text={'Register'}
-              submitted={this.state.registering}
+              submitting={this.state.registering}
               disabled={this.state.registering || !this.state.valid}
             />
           </div>

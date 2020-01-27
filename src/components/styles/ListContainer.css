@@ -51,6 +51,7 @@ input[type='checkbox'] {
 .completedTask {
   font-size: 18px;
   text-decoration: line-through #5a5a5a;
+  transition: 0.5s all;
 }
 
 .no_data {

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import LoginForm from './LoginForm';
-import { fetchFromUrl } from './utils/fetch';
-import { loginUrl, baseURL } from './config/url';
-import './styles/FormPage.css';
+import { fetchFromUrl } from '../utils/fetch';
+import { loginUrl, baseURL } from '../config/url';
+import '../styles/FormPage.css';
 
 class Login extends Component {
   constructor(props) {

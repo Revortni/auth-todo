@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './styles/AddItem.css';
+import '../styles/AddItem.css';
 class AddItem extends Component {
   constructor() {
     super();

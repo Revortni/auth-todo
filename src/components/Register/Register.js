@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import RegisterForm from './RegisterForm';
-import { fetchFromUrl } from './utils/fetch';
-import { registerUrl, baseURL } from './config/url';
-import './styles/FormPage.css';
+import { fetchFromUrl } from '../utils/fetch';
+import { registerUrl, baseURL } from '../config/url';
+import '../styles/FormPage.css';
 
 class Register extends Component {
   constructor(props) {
