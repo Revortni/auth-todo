@@ -20,13 +20,19 @@ const HeaderContent = ({ firstName, lastName }) => {
 };
 
 const withSignOutButton = Component => {
-  return ({ authenticated, handleLogout, data, ...rest }) => {
+  return ({
+    authenticated,
+    handleLogout,
+    data,
+    showHeaderOptions,
+    ...rest
+  }) => {
     if (!authenticated) {
       return null;
     }
     return (
       <div className='header_right clearfix'>
-        <Component {...rest} />
+        {showHeaderOptions ? <Component {...rest} /> : null}
         <div className='header-profile-options'>
           <HeaderContent {...data} />
           <div className='signout-button' onClick={handleLogout}>

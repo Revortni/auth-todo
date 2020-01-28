@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import FormInput from '../Form/FormInput';
 import { loginValidation } from '../utils/validation';
 import FormButton from '../Form/FormButton';
-import _ from 'lodash';
 import '../styles/Form.css';
 
 class LoginForm extends Component {

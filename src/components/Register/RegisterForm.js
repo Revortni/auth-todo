@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import FormInput from '../Form/FormInput';
 import FormButton from '../Form/FormButton';
 import { registerValidation } from '../utils/validation';
-import _ from 'lodash';
 import '../styles/Form.css';
 
 class RegisterForm extends Component {
