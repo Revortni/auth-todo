@@ -161,7 +161,15 @@ class Main extends React.Component {
           setFilter={this.setCompletedFilter}
           data={this.state.data}
         />
-        <Dashboard />
+        <AddItem handleSubmit={this.handleAddItem} />
+        <SearchItem handleSearchItem={this.filterItems} />
+        <ListContainer
+          list={this.state.filtered}
+          checkItem={this.checkItem}
+          removeItem={this.removeItem}
+          filter={this.state.filter}
+          loading={this.state.loading}
+        />
       </React.Fragment>
     );
   }
