@@ -8,16 +8,19 @@
 }
 
 .input-form-title {
-  padding: 20px 0;
+  padding: 10px 0;
 }
 .input-form-title h1 {
   padding: 5px 0;
+}
+.input-form-title {
+  padding: 10px 0;
 }
 
 .input-form input[type='text'],
 input[type='password'] {
   width: 100%;
-  padding: 15px;
+  padding: 12px;
   margin: 5px 0;
   display: inline-block;
   border: 1px solid #e2e2e2;
@@ -91,4 +94,16 @@ input[type='password']:disabled {
 
 .form-bottom-info-redirect a:hover {
   text-decoration: underline;
+}
+
+@media screen and (min-width: 600px) and (max-width: 1170px) {
+  .input-form-title {
+    padding: 20px 0;
+  }
+}
+
+@media screen and (min-width: 1170px) {
+  .input-form-title {
+    padding: 20px 0;
+  }
 }

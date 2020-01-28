@@ -8,7 +8,7 @@
 
 .form-error-message {
   text-align: center;
-  padding: 50px;
+  padding: 10px;
   color: #d8000c;
 }
 
@@ -18,7 +18,11 @@
   }
 
   .register-wrapper {
-    padding: 100px 40px;
+    padding: 50px 40px;
+  }
+
+  .form-error-message {
+    padding: 25px;
   }
 }
 
@@ -28,6 +32,10 @@
   }
 
   .register-wrapper {
-    padding: 50px 40px;
+    padding: 20px 40px;
+  }
+
+  .form-error-message {
+    padding: 25px;
   }
 }
