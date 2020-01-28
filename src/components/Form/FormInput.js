@@ -6,18 +6,19 @@ const FormInput = props => {
     <div className='form-input-wrapper'>
       <label htmlFor={props.name}>
         <b>{props.title}</b>
+        <input
+          type={props.type}
+          placeholder={props.placeholder}
+          name={props.name}
+          required={props.required}
+          onChange={props.onChange}
+          disabled={props.disabled}
+          id={props.name}
+        />
+        {props.error ? (
+          <span className='form-input-error'>{props.error}</span>
+        ) : null}
       </label>
-      <input
-        type={props.type}
-        placeholder={props.placeholder}
-        name={props.name}
-        required={props.required}
-        onChange={props.onChange}
-        disabled={props.disabled}
-      />
-      {props.error ? (
-        <span className='form-input-error'>{props.error}</span>
-      ) : null}
     </div>
   );
 };

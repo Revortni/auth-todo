@@ -12,6 +12,7 @@ class LoginForm extends Component {
       data: { email: '', password: '' },
       loggingIn: false,
       error: {},
+      validation: { email: false, password: false },
       valid: false,
       status: ''
     };
@@ -19,9 +20,19 @@ class LoginForm extends Component {
 
   handleChange = e => {
     e.preventDefault();
-    let change = { [e.target.name]: e.target.value };
+    const data = { ...this.state.data, [e.target.name]: e.target.value };
+    const fieldName = e.target.name;
+    const { error, valid, validation } = loginValidation({
+      data,
+      fieldName,
+      validation: this.state.validation
+    });
+
     this.setState(prevState => ({
-      data: { ...prevState.data, ...change }
+      data: { ...prevState.data, ...data },
+      error: { ...prevState.error, ...error },
+      validation,
+      valid
     }));
   };
 
@@ -32,30 +43,34 @@ class LoginForm extends Component {
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
+    //check if logging in state has changed props from parent
     if (nextProps.loggingIn !== prevState.loggingIn) {
       return { loggingIn: nextProps.loggingIn };
     } else return null;
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (prevProps.loggingIn !== this.props.loggingIn) {
       this.setState({ loggingIn: this.props.loggingIn });
     }
-    if (this.state.data !== prevState.data) {
-      const inputData = {
-        ...this.state.data
-      };
-      const validation = loginValidation(inputData);
-      const { valid, error } = validation;
 
-      if (!_.isEqual(this.state.error, error)) {
-        this.setState({ error });
-      }
+    // if (this.state.data !== prevState.data) {
+    //   const inputData = {
+    //     ...this.state.data
+    //   };
+    //   const validation = loginValidation(inputData);
+    //   const { valid, error } = validation;
 
-      if (!_.isEqual(this.state.valid, valid)) {
-        this.setState({ valid });
-      }
-    }
+    //   //check if any new errors have been set
+    //   if (!_.isEqual(this.state.error, error)) {
+    //     this.setState({ error });
+    //   }
+
+    //   //check if the valid
+    //   if (!_.isEqual(this.state.valid, valid)) {
+    //     this.setState({ valid });
+    //   }
+    // }
   }
 
   render() {

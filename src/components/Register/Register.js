@@ -11,7 +11,6 @@ class Register extends Component {
     this.state = {
       registered: false,
       registering: false,
-      email: false,
       error: null
     };
   }

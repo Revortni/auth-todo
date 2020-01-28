@@ -16,6 +16,13 @@ class RegisterForm extends Component {
         password: '',
         confirmPassword: ''
       },
+      validation: {
+        firstName: false,
+        lastName: false,
+        email: false,
+        password: false,
+        confirmPassword: false
+      },
       registering: false,
       error: {},
       valid: false,
@@ -25,16 +32,28 @@ class RegisterForm extends Component {
 
   handleChange = e => {
     e.preventDefault();
-    let change = { [e.target.name]: e.target.value.trim() };
+    const data = { ...this.state.data, [e.target.name]: e.target.value };
+    const fieldName = e.target.name;
+    const { error, valid, validation } = registerValidation({
+      data,
+      fieldName,
+      validation: this.state.validation
+    });
+
     this.setState(prevState => ({
-      data: { ...prevState.data, ...change }
+      data: { ...prevState.data, ...data },
+      error: { ...prevState.error, ...error },
+      validation,
+      valid
     }));
   };
 
   handleSubmit = e => {
     e.preventDefault();
-    const { data } = { ...this.state };
-    this.props.requestRegister(data);
+    if (this.checkIfValid()) {
+      const { data } = { ...this.state };
+      this.props.requestRegister(data);
+    }
   };
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -47,23 +66,6 @@ class RegisterForm extends Component {
     //check if form is being submitted
     if (prevProps.registering !== this.props.registering) {
       this.setState({ registering: this.props.registering });
-    }
-
-    //check if all form fields are valid
-    if (this.state.data !== prevState.data) {
-      const inputData = {
-        ...this.state.data
-      };
-      const validation = registerValidation(inputData);
-      const { valid, error } = validation;
-
-      if (!_.isEqual(this.state.error, error)) {
-        this.setState({ error });
-      }
-
-      if (!_.isEqual(this.state.valid, valid)) {
-        this.setState({ valid });
-      }
     }
   }
 

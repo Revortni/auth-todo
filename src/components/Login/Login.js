@@ -11,10 +11,12 @@ class Login extends Component {
     this.state = {
       loggedIn: false,
       loggingIn: false,
-      redirectToReferrer: false
+      redirectToReferrer: false,
+      error: null
     };
   }
 
+  //set the error state if any error response is received from server
   handleError = ({ err }) => {
     if (err.response) {
       const { msg } = err.response.data || { msg: 'Error' };
@@ -24,6 +26,7 @@ class Login extends Component {
     }
   };
 
+  //save received token after login, call auth of route component
   saveToken = ({ token, ...rest }) => {
     localStorage.setItem(`token`, token);
     this.setState({ loggingIn: false, redirectToReferrer: true });
@@ -43,7 +46,9 @@ class Login extends Component {
 
   render() {
     const error = this.props.error || this.state.error;
+    //former path from where it was redirected to login
     const { from } = this.props.location.state || { from: { pathname: '/' } };
+    //login should redirect
     const { redirectToReferrer } = this.state;
 
     //redirect to initial route after authentication
