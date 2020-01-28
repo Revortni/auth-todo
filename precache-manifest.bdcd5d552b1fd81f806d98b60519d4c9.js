@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "6fa473fffe8d2ede9cd33a88a3d194f6",
+    "revision": "d873b0db88dd0ef02c4c8c308707129c",
     "url": "/auth-todo/index.html"
   },
   {
-    "revision": "82fa8a9c5250804ae1b9",
+    "revision": "e2cb3cb0f0318def5971",
     "url": "/auth-todo/static/css/main.75f3dd52.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/auth-todo/static/js/2.ba24b9f7.chunk.js.LICENSE"
   },
   {
-    "revision": "82fa8a9c5250804ae1b9",
-    "url": "/auth-todo/static/js/main.c54d5b83.chunk.js"
+    "revision": "e2cb3cb0f0318def5971",
+    "url": "/auth-todo/static/js/main.7e0902c0.chunk.js"
   },
   {
     "revision": "34be0f28186c25284ed2",
